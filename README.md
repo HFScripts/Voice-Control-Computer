@@ -11,8 +11,8 @@ It is recommended to use push to talk to ask prompts.
 https://github.com/espeak-ng/espeak-ng/releases/download/1.51/espeak-ng-X64.msi
 
 2. Install C++ build tools. Make sure to actually install the MSBuild Tools/C++ Build tools. Refer to here
-https://stackoverflow.com/questions/64261546/how-to-solve-error-microsoft-visual-c-14-0-or-greater-is-required-when-inst
-https://visualstudio.microsoft.com/visual-cpp-build-tools/
+- https://stackoverflow.com/questions/64261546/how-to-solve-error-microsoft-visual-c-14-0-or-greater-is-required-when-inst
+- https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
 3. Download Tesseract OCR for windows. This is so we can move the mouse where we want it.
 https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.1.20230401.exe

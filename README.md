@@ -7,7 +7,7 @@ A simple voice-controlled computer program that allows you to control your compu
 3. Download and install the Tesseract OCR executable from [here](https://github.com/UB-Mannheim/tesseract/wiki) and set the Tesseract OCR executable path in the script.
 4. Set up an OpenAI API key [here](https://beta.openai.com/signup/) and set the `api_key` variable in the script.
 5. pip install tts
-6. tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav
+6. `tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav`
 7. Run the script!
 
 ## Usage

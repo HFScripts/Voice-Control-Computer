@@ -1,0 +1,13 @@
+SpeechRecognition
+pyautogui
+pytesseract
+pillow
+screeninfo
+textdistance
+pyttsx3
+fuzzywuzzy
+python-Levenshtein
+pywin32
+openai
+TTS
+pyaudio

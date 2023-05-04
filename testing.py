@@ -25,6 +25,7 @@ import pyautogui
 import keyboard
 import PySimpleGUI as sg
 from PIL import ImageFont, ImageDraw, Image
+from screeninfo import get_monitors
 
 # Define code words for each grid position
 code_words = {

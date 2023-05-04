@@ -3,6 +3,9 @@ A simple voice-controlled computer program that allows you to control your compu
 
 ## Basics
 So for this project, you must use Anaconda/Conda for windows. The reason for this is library access and ease of use. There are a number of long winded reasons as to why it wont work with other setups, so just trust me - Use conda. 
+- https://www.anaconda.com/
+- `conda create --name my_tts_env`
+- `conda activate my_tts_env`
 
 ## Getting started
 1. Install the required Python packages: `pip install speechrecognition pyautogui pytesseract pillow screeninfo textdistance pyttsx3 fuzzywuzzy python-Levenshtein pywin32`

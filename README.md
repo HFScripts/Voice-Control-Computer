@@ -1,4 +1,4 @@
-# Voice Recognition Computer
+# Voice Control Computer
 A simple voice-controlled computer program that allows you to control your computer using your voice. You can open applications, switch between windows, browse the web, and more, all with voice commands.
 
 ## Basics

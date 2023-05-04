@@ -3,31 +3,50 @@ A simple voice-controlled computer program that allows you to control your compu
 
 ## Basics
 So for this project, you must use Anaconda/Conda for windows. The reason for this is library access and ease of use. There are a number of long winded reasons as to why it wont work with other setups, so just trust me - Use conda. 
+It is recommended to use push to talk to ask prompts.
 
 ## Installation
 
-1. Download and install Anaconda: https://www.anaconda.com/
-2. Setup the conda environment with python 3.9:
-    ```
-    conda create --name tts_control_system python=3.9
-    conda activate tts_control_system
-    ```
-3. Download the github repository and enter it:
-    ```
-    git clone https://github.com/HFScripts/Voice-Control-Computer.git
-    cd Voice-Control-Computer
-    ```
-4. Install the requirements for this project:
-    ```
-    pip install -r requirements.txt
-    ```
-5. Generate the initial audio file for testing:
-    ```
-    tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav
-    ```
-6. Download Tesseract OCR for Windows: https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.1.20230401.exe
-7. Get your API key for ChatGPT: https://platform.openai.com/account/api-keys
-8. Edit the \`start.py\` file with your API key on line 42.
+1. Install espeak. Make sure you do this first, so that way Conda can find it in path.
+https://github.com/espeak-ng/espeak-ng/releases/download/1.51/espeak-ng-X64.msi
+
+2. Install C++ build tools. Make sure to actually install the MSBuild Tools/C++ Build tools. Refer to here
+https://stackoverflow.com/questions/64261546/how-to-solve-error-microsoft-visual-c-14-0-or-greater-is-required-when-inst
+https://visualstudio.microsoft.com/visual-cpp-build-tools/
+
+3. Download Tesseract OCR for windows. This is so we can move the mouse where we want it.
+https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.1.20230401.exe
+
+4. Download and install Anaconda:
+https://www.anaconda.com/
+Once installed, launch an anaconda command prompt.
+
+5. Setup the conda environment with python 3.9
+```
+conda create --name tts_control_system python=3.9
+conda activate tts_control_system
+conda install git
+```
+
+6. Download the github repository and enter it.
+```
+git clone https://github.com/HFScripts/Voice-Control-Computer.git
+cd Voice-Control-Computer
+```
+
+7. Install the requirements for this project
+```
+pip install -r requirements.txt
+```
+
+8. Generate the initial Fetching that for you audio, also good for testing. If this doesn't break, you are good to go.
+```
+tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav
+```
+
+9. Getting your API key for chatgpt (If you don't, you wont be able to use "ask ai" as a voice command. 
+https://platform.openai.com/account/api-keys
+Edit the start.py file with your API key on line 42
 
 ## Usage
 To run the script, enter the following command in your terminal:

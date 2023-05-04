@@ -147,7 +147,7 @@ r = sr.Recognizer()
 levenshtein_threshold = 2
 
 developer_mode = False
-api_key = "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"
+api_key = "sk-test"
 os.system('title Voice Recognition Computer')
 lang = 'en'
 said = ""

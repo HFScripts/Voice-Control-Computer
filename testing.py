@@ -4,6 +4,8 @@ import os
 import re
 import subprocess
 import time
+from screeninfo import get_monitors
+
 from concurrent.futures import ThreadPoolExecutor
 from fuzzywuzzy import fuzz
 import openai
@@ -19,26 +21,31 @@ import win32api
 import win32con
 import win32gui
 import win32process
-from PIL import Image
+
 from pytesseract import Output
 import pyautogui
 import keyboard
 import PySimpleGUI as sg
 from PIL import ImageFont, ImageDraw, Image
-from screeninfo import get_monitors
 
-# Define code words for each grid position
 code_words = {
-    'a1': 'apple', 'b1': 'banana', 'c1': 'carrot', 'd1': 'donut', 'e1': 'eggplant', 'f1': 'french fry', 'g1': 'grapes', 'h1': 'hamburger',
-    'a2': 'ice cream', 'b2': 'jelly', 'c2': 'kiwi', 'd2': 'lemon', 'e2': 'mango', 'f2': 'nacho', 'g2': 'orange', 'h2': 'pizza',
-    'a3': 'pear', 'b3': 'raspberry', 'c3': 'strawberry', 'd3': 'tangerine', 'e3': 'ugly fruit', 'f3': 'vanilla', 'g3': 'watermelon', 'h3': 'xylophone',
-    'a4': 'yellow apple', 'b4': 'zucchini', 'c4': 'apricot', 'd4': 'blueberry', 'e4': 'cantaloupe', 'f4': 'dragonfruit', 'g4': 'egg', 'h4': 'fries',
-    'a5': 'grapefruit', 'b5': 'hazelnut', 'c5': 'iceberg', 'd5': 'jalapeno', 'e5': 'kiwi fruit', 'f5': 'lemonade', 'g5': 'melon', 'h5': 'nacho cheese',
-    'a6': 'orange peel', 'b6': 'pineapple', 'c6': 'quinoa', 'd6': 'raisin', 'e6': 'strawberry', 'f6': 'taco', 'g6': 'ugni', 'h6': 'vanilla cupcake',
-    'a7': 'walnut', 'b7': 'xylophone', 'c7': 'yogurt', 'd7': 'zucchini', 'e7': 'apple cider', 'f7': 'bagel', 'g7': 'chocolate', 'h7': 'donut',
-    'a8': 'elderberry', 'b8': 'fruit snack', 'c8': 'grape', 'd8': 'honeydew', 'e8': 'ice cream cone', 'f8': 'jelly bean', 'g8': 'kiwi', 'h8': 'lollipop',
+    'a1': 'apple', 'b1': 'banana', 'c1': 'carrot', 'd1': 'donut', 'e1': 'elephant', 'f1': 'frog', 'g1': 'curtain', 'h1': 'hamburger', 'i1': 'igloo', 'j1': 'jacket', 'k1': 'kangaroo', 'l1': 'lamp', 'm1': 'mango', 'n1': 'nachos', 'o1': 'octopus', 'p1': 'piano',
+    'a2': 'ice cream', 'b2': 'jelly', 'c2': 'car', 'd2': 'carpet', 'e2': 'eggplant', 'f2': 'shark', 'g2': 'pretzel', 'h2': 'hot dog', 'i2': 'iris', 'j2': 'jaguar', 'k2': 'kettle', 'l2': 'llama', 'm2': 'muffin', 'n2': 'notebook', 'o2': 'ostrich', 'p2': 'pumpkin',
+    'a3': 'pear', 'b3': 'raspberry', 'c3': 'cat', 'd3': 'train', 'e3': 'emu', 'f3': 'fox', 'g3': 'grape', 'h3': 'red bull', 'i3': 'iceberg', 'j3': 'jeep', 'k3': 'koala', 'l3': 'lemon', 'm3': 'marshmallow', 'n3': 'newt', 'o3': 'owl', 'p3': 'popcorn',
+    'a4': 'yellow', 'b4': 'zebra', 'c4': 'chicken', 'd4': 'duck', 'e4': 'eagle', 'f4': 'flower', 'g4': 'noodles', 'h4': 'honey', 'i4': 'island', 'j4': 'jam', 'k4': 'kite', 'l4': 'lobster', 'm4': 'mushroom', 'n4': 'nut', 'o4': 'ocean', 'p4': 'pineapple',
+    'a5': 'grapefruit', 'b5': 'horse', 'c5': 'cactus', 'd5': 'dog', 'e5': 'kiwi', 'f5': 'fries', 'g5': 'wallet', 'h5': 'honeydew', 'i5': 'iguana', 'j5': 'jellyfish', 'k5': 'ketchup', 'l5': 'lighthouse', 'm5': 'moon', 'n5': 'nugget', 'o5': 'otter', 'p5': 'penguin',
+    'a6': 'orange', 'b6': 'pineapple', 'c6': 'china', 'd6': 'donkey', 'e6': 'strawberry', 'f6': 'water', 'g6': 'tomato', 'h6': 'hazelnut', 'i6': 'inchworm', 'j6': 'jigsaw', 'k6': 'kiwi bird', 'l6': 'lizard', 'm6': 'mountain', 'n6': 'nest', 'o6': 'oyster', 'p6': 'plum',
+    'a7': 'watermelon', 'b7': 'bird', 'c7': 'cake', 'd7': 'dolphin', 'e7': 'eggplant', 'f7': 'fish', 'g7': 'grilled cheese', 'h7': 'hot dog', 'i7': 'ice skate', 'j7': 'judo', 'k7': 'keyboard', 'l7': 'lily', 'm7': 'meteor', 'n7': 'nose', 'o7': 'opera', 'p7': 'polar bear',
+    'a8': 'butter', 'b8': 'pancake', 'c8': 'cherry', 'd8': 'whale', 'e8': 'eclair', 'f8': 'rose', 'g8': 'juice', 'h8': 'hamburger', 'i8': 'iron', 'j8': 'jump rope', 'k8': 'kumquat', 'l8': 'lock', 'm8': 'mirror', 'n8': 'narwhal', 'o8': 'orchid', 'p8': 'parrot',
+    'a9': 'quail', 'b9': 'queen', 'c9': 'quiche', 'd9': 'quinoa', 'e9': 'quokka', 'f9': 'quartz', 'g9': 'quesadilla', 'h9': 'quill', 'i9': 'quiver', 'j9': 'quicksand', 'k9': 'quadrant', 'l9': 'quail egg', 'm9': 'quince', 'n9': 'quinoa salad', 'o9': 'quadrilateral', 'p9': 'quadruplets',
+    'a10': 'rabbit', 'b10': 'raccoon', 'c10': 'radio', 'd10': 'radish', 'e10': 'rainbow', 'f10': 'raisin', 'g10': 'rattle', 'h10': 'reindeer', 'i10': 'rhino', 'j10': 'ribbon', 'k10': 'rice', 'l10': 'rooster', 'm10': 'robot', 'n10': 'rocket', 'o10': 'ruler', 'p10': 'rattlesnake',
+    'a11': 'squirrel', 'b11': 'starfish', 'c11': 'scarf', 'd11': 'scissors', 'e11': 'seagull', 'f11': 'seashell', 'g11': 'skyscraper', 'h11': 'sloth', 'i11': 'snail', 'j11': 'snake', 'k11': 'snowflake', 'l11': 'spider', 'm11': 'sunflower', 'n11': 'note', 'o11': 'octagon', 'p11': 'popsicle',
+    'a12': 'tortoise', 'b12': 'tiger', 'c12': 'telescope', 'd12': 'teddy bear', 'e12': 'television', 'f12': 'taco', 'g12': 'tractor', 'h12': 'tulip', 'i12': 'turtle', 'j12': 'tornado', 'k12': 'tambourine', 'l12': 'toad', 'm12': 'mistletoe', 'n12': 'nest', 'o12': 'oatmeal', 'p12': 'pencil',
+    'a13': 'umbrella', 'b13': 'unicorn', 'c13': 'unicycle', 'd13': 'ukulele', 'e13': 'uranium', 'f13': 'utensils', 'g13': 'uniform', 'h13': 'urchin', 'i13': 'upstairs', 'j13': 'underwear', 'k13': 'umpire', 'l13': 'ultrasound', 'm13': 'umbilical', 'n13': 'underpass', 'o13': 'uptown', 'p13': 'uplift',
+    'a14': 'violin', 'b14': 'vampire', 'c14': 'vanilla', 'd14': 'vest', 'e14': 'vase', 'f14': 'volcano', 'g14': 'vortex', 'h14': 'vine', 'i14': 'vulture', 'j14': 'valley', 'k14': 'vodka', 'l14': 'violet', 'm14': 'vault', 'n14': 'vitamin', 'o14': 'viper', 'p14': 'vote',
+    'a15': 'walrus', 'b15': 'wombat', 'c15': 'wagon', 'd15': 'whisk', 'e15': 'windmill', 'f15': 'waffle', 'g15': 'watch', 'h15': 'window', 'i15': 'wizard', 'j15': 'waterfall', 'k15': 'kettlebell', 'l15': 'lawnmower', 'm15': 'matchstick', 'n15': 'necktie', 'a16': 'otter', 'p15': 'paintbrush',
+    'a16': 'xylophone', 'b16': 'xenon', 'c16': 'x-ray', 'd16': 'xerox', 'e16': 'xenophobia', 'f16': 'xeriscape', 'g16': 'xylem', 'h16': 'xenolith', 'i16': 'xenograft', 'j16': 'xanthan', 'k16': 'xerophyte', 'l16': 'xenocryst', 'm16': 'xiphoid', 'n16': 'xerosis', 'o16': 'xanthophyll', 'p16': 'xoloitzcuintli',
 }
-
 overlay_window = None
 is_grid_displayed = False
 
@@ -63,7 +70,7 @@ def screen_help():
                         
 def create_overlay():
     screen_size = (1920, 1080)  # Set your screen resolution here
-    grid_size = (8, 8)
+    grid_size = (16, 16)
     cell_width, cell_height = screen_size[0] // grid_size[0], screen_size[1] // grid_size[1]
 
     layout = [[sg.Graph(screen_size, (0, 0), screen_size, key='-GRAPH-', enable_events=True, background_color=None)]]
@@ -107,11 +114,14 @@ def recognize_speech():
                 return code_word
         if recognized_text == "screen help":
             return "screen help"
+        # If recognized text does not match any code word, print it out
+        print("You said: " + recognized_text)
     except sr.UnknownValueError:
         print("Unable to understand audio")
     except sr.RequestError as e:
         print("Could not request results; {0}".format(e))
     return ""
+
 
 def move_mouse_to_grid(code_word, is_grid_displayed):
     grid_id = None
@@ -125,7 +135,7 @@ def move_mouse_to_grid(code_word, is_grid_displayed):
         return is_grid_displayed
 
     screen_size = (1920, 1080)  # Set your screen resolution here
-    grid_size = (8, 8)
+    grid_size = (16, 16)
     cell_width, cell_height = screen_size[0] // grid_size[0], screen_size[1] // grid_size[1]
 
     row, col = ord(grid_id[0].lower()) - ord('a'), int(grid_id[1]) - 1
@@ -148,7 +158,7 @@ r = sr.Recognizer()
 levenshtein_threshold = 2
 
 developer_mode = False
-api_key = "sk-test"
+api_key = "sk-APIKEY"
 os.system('title Voice Recognition Computer')
 lang = 'en'
 said = ""
@@ -294,12 +304,13 @@ def listen_for_command():
     return command
 
 def open_domain(domain):
-    pyautogui.keyDown('ctrl')
-    pyautogui.press('t')
-    pyautogui.keyUp('ctrl')
+    pyautogui.keyDown('win')
+    pyautogui.press('r')
+    pyautogui.keyUp('win')
+    pyautogui.typewrite("https://")
     pyautogui.typewrite(domain)
     pyautogui.press('enter')
-    print(f"Opened {domain} in a new tab.")
+    print(f"Opened Command Prompt")
     
 def ping_domain(domain):
     pyautogui.hotkey("win", "r")
@@ -409,7 +420,7 @@ def set_developer_mode(mode):
 command_patterns = {
     "locate": r"locate (.*)",
     "switch to": r"switch to (.*)",
-    "click there": r"(?:click|pick|select)(?: (?:there|that|it))?",
+    "click there": r"(?:click|pick|put)(?: (?:there|that|it))?",
     "full screen": r"full(-|\s)?screen",
     "exit fullscreen": r"exit full(?:-|\s)screen",
     "next video": r"next video",
@@ -438,7 +449,7 @@ command_patterns = {
     "minimise": r"minim(?:i|ou?)se",
     "switch tab next": r"switch tab next",
     "switch tab previous": r"switch tab previous",
-    "open": r"open\s+([a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,}",
+    "open": r"open\s+([a-zA-Z0-9]+\.[a-zA-Z]{2,})",
     "switch tab": r"(?i)switch tab (\d)",
     "refresh page": r"refresh page|reload page|reload",
     "cut": r"cut|cut selected|cut that|delete that|delete selected",
@@ -456,7 +467,7 @@ command_patterns = {
     "developer mode off": r"developer mode off",
     "ping": r"ping\s+([a-zA-Z0-9]+\.[a-zA-Z]{2,})",
     "ask ai": r"ask ai (.*)",
-    "screen help": r"screen help",
+    "screen help": r"(?:scream|stream|.*\b)screen help",
 }
 
 # Loop until the program is stopped

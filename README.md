@@ -8,17 +8,17 @@ It is recommended to use push to talk to ask prompts.
 ## Installation
 
 1. Install espeak. Make sure you do this first, so that way Conda can find it in path.
-https://github.com/espeak-ng/espeak-ng/releases/download/1.51/espeak-ng-X64.msi
+- https://github.com/espeak-ng/espeak-ng/releases/download/1.51/espeak-ng-X64.msi
 
 2. Install C++ build tools. Make sure to actually install the MSBuild Tools/C++ Build tools. Refer to here
 - https://stackoverflow.com/questions/64261546/how-to-solve-error-microsoft-visual-c-14-0-or-greater-is-required-when-inst
 - https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
 3. Download Tesseract OCR for windows. This is so we can move the mouse where we want it.
-https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.1.20230401.exe
+- https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.1.20230401.exe
 
 4. Download and install Anaconda:
-https://www.anaconda.com/
+- https://www.anaconda.com/
 Once installed, launch an anaconda command prompt.
 
 5. Setup the conda environment with python 3.9
@@ -45,7 +45,7 @@ tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits-
 ```
 
 9. Getting your API key for chatgpt (If you don't, you wont be able to use "ask ai" as a voice command. 
-https://platform.openai.com/account/api-keys
+- https://platform.openai.com/account/api-keys
 Edit the start.py file with your API key on line 42
 
 ## Usage
@@ -108,16 +108,17 @@ The program listens for voice commands and responds accordingly. Some example co
 - `ask ai`: listens for user input through the microphone and processes it as an audio command.
 
 Dependencies
-Python 3.7 or later
-speechrecognition
-pyautogui
-pytesseract
-pillow
-screeninfo
-textdistance
-pyttsx3
-fuzzywuzzy
-python-Levenshtein
-pywin32
+Python 3.9
+- speechrecognition
+- pyautogui
+- pytesseract
+- pillow
+- screeninfo
+- textdistance
+- pyttsx3
+- fuzzywuzzy
+- python-Levenshtein
+- pywin32
+- TTS
 License
 This project is licensed under the MIT License - see the LICENSE.md file for details.

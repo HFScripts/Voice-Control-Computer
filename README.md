@@ -6,43 +6,63 @@ A simple voice-controlled computer program that allows you to control your compu
 2. If you're using Windows, also run `conda install pywin32`
 3. Download and install the Tesseract OCR executable from [here](https://github.com/UB-Mannheim/tesseract/wiki) and set the Tesseract OCR executable path in the script.
 4. Set up an OpenAI API key [here](https://beta.openai.com/signup/) and set the `api_key` variable in the script.
-5. Run the script!
+5. pip install tts
+6. tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav
+7. Run the script!
 
 ## Usage
 The program listens for voice commands and responds accordingly. Some example commands are:
 
 ### Voice Commands
-- `locate [word]`: locates the position of a word on the screen.
-- `click there`: performs a left-click action on the current position of the mouse.
-- `full screen`: presses the "F" key to toggle full screen mode.
-- `exit fullscreen`: presses the "Esc" key to exit full screen mode.
-- `next video`: presses the "Shift" and "N" keys to go to the next video.
-- `previous video`: presses the "J" key to go to the previous video.
-- `pause`: presses the "K" key to pause the current video.
-- `play`: presses the "K" key to resume the current video.
-- `mute`: presses the "M" key to mute the audio.
-- `unmute`: presses the "M" key to unmute the audio.
-- `new tab`: presses the "Ctrl" and "T" keys to open a new tab.
-- `close tab`: presses the "Ctrl" and "W" keys to close the current tab.
-- `scroll down [n]`: scrolls down by n pixels (default is 1).
-- `scroll up [n]`: scrolls up by n pixels (default is 1).
-- `zoom in`: presses the "Ctrl" and "+" keys to zoom in.
-- `zoom out`: presses the "Ctrl" and "-" keys to zoom out.
-- `open run`: presses the "Win" and "R" keys to open the Run dialog box.
-- `copy`: presses the "Ctrl" and "C" keys to copy selected text.
-- `paste`: presses the "Ctrl" and "V" keys to paste copied text.
-- `select all`: presses the "Ctrl" and "A" keys to select all text.
-- `type string [text]`: types the specified text on the screen.
-- `search`: presses the "Enter" key to perform a search.
-- `tab`: presses the "Tab" key to switch to the next field.
-- `backspace`: presses the "Backspace" key to delete the previous character.
-- `space`: presses the "Space" key to insert a space.
-- `alt tab`: presses the "Alt" and "Tab" keys to switch to the next window.
-- `maximise`: maximizes the current window.
-- `minimise`: minimizes the current window.
-- `switch tab next`: presses the "Ctrl" and "Tab" keys to switch to the next tab.
-- `switch tab previous`: presses the "Ctrl", "Shift", and "Tab" keys to switch to the previous tab.
-
+- `locate [word]`: Locates the position of a word on the screen.
+- `click there`: Clicks at the current mouse position or where the last locate command found a word.
+- `full screen`: Presses the 'f' key to toggle full-screen mode.
+- `exit fullscreen`: Presses the 'esc' key to exit full-screen mode.
+- `next video`: Presses 'shift' + 'n' keys to move to the next video.
+- `previous video`: Presses the 'j' key to go to the previous video.
+- `pause`: Presses the 'k' key to pause the video.
+- `play`: Presses the 'k' key to play the video.
+- `mute`: Presses the 'm' key to mute the volume.
+- `unmute`: Presses the 'm' key to unmute the volume.
+- `new tab`: Presses 'ctrl' + 't' keys to open a new tab.
+- `close tab`: Presses 'ctrl' + 'w' keys to close the current tab.
+- `scroll down`: Scrolls down by a specified number (default is 1).
+- `scroll up`: Scrolls up by a specified number (default is 1).
+- `zoom in`: Presses 'ctrl' + '+' keys to zoom in.
+- `zoom out`: Presses 'ctrl' + '-' keys to zoom out.
+- `open run`: Presses 'win' + 'r' keys to open the Run dialog.
+- `copy`: Presses 'ctrl' + 'c' keys to copy the selected content.
+- `paste`: Presses 'ctrl' + 'v' keys to paste the copied content.
+- `select all`: Presses 'ctrl' + 'a' keys to select all content.
+- `type string [text]`: Types the specified text.
+- `search`: Presses the 'enter' key to initiate a search.
+- `tab`: Presses the 'tab' key to navigate between elements.
+- `backspace`: Presses the 'backspace' key to delete a character.
+- `space`: Presses the 'space' key to input a space character.
+- `alt tab`: Presses 'alt' + 'tab' keys to switch between open windows.
+- `maximise`: Maximizes the current window.
+- `minimise`: Minimizes the current window.
+- `switch tab next`: Presses 'ctrl' + 'tab' keys to switch to the next tab.
+- `switch tab previous`: Presses 'ctrl' + 'shift' + 'tab' keys to switch to the previous tab.
+- `switch to [window_name]`: Switches to the specified window.
+- `open [domain]`: Opens the specified domain.
+- `switch tab [number]`: Switches to the specified tab number.
+- `refresh page`: Presses 'ctrl' + 'r' keys to refresh the current page.
+- `cut`: Presses 'ctrl' + 'x' keys to cut the selected content.
+- `open file explorer`: Presses 'win' + 'e' keys to open File Explorer.
+- `create new folder`: Presses 'ctrl' + 'shift' + 'n' keys to create a new folder.
+- `undo`: Presses 'ctrl' + 'z' keys to undo the last action.
+- `redo`: Presses 'ctrl' + 'y' keys to redo the last undone action.
+- `save`: Presses 'ctrl' + 's' keys to save the current file.
+- `save as`: saves the current document with a new name by simulating the "Ctrl + Shift + S" hotkey.
+- `double click`: performs a double-click action at the current mouse position.
+- `open command prompt`: opens the command prompt (Windows) or terminal (Linux/Mac) on your system.
+- `send text`: simulates pressing the "Enter" key, sending the text currently typed.
+- `stop command`: stops the currently running command by simulating the "Ctrl + C" hotkey.
+- `developer mode on`: enables the developer mode in the application.
+- `developer mode off`: disables the developer mode in the application.
+- `ping`: pings a specified domain to check network connectivity.
+- `ask ai`: listens for user input through the microphone and processes it as an audio command.
 
 Dependencies
 Python 3.7 or later

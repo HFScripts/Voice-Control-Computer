@@ -8,14 +8,39 @@ So for this project, you must use Anaconda/Conda for windows. The reason for thi
 - `conda activate my_tts_env`
 
 ## Getting started
-1. Install the required Python packages: `pip install speechrecognition pyautogui pytesseract pillow screeninfo textdistance pyttsx3 fuzzywuzzy python-Levenshtein pywin32 openai tts`
-2. If you're using Windows, also run `conda install pywin32`
-3. Download and install the Tesseract OCR executable from [here](https://github.com/UB-Mannheim/tesseract/wiki) and set the Tesseract OCR executable path in the script.
-4. Set up an OpenAI API key [here](https://beta.openai.com/signup/) and set the `api_key` variable in the script.
-5. `tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav`
-6. Run the script!
+# Voice-Control-Computer
+
+## Installation
+
+1. Download and install Anaconda: https://www.anaconda.com/
+2. Setup the conda environment with python 3.9:
+    ```
+    conda create --name tts_control_system python=3.9
+    conda activate tts_control_system
+    ```
+3. Download the github repository and enter it:
+    ```
+    git clone https://github.com/HFScripts/Voice-Control-Computer.git
+    cd Voice-Control-Computer
+    ```
+4. Install the requirements for this project:
+    ```
+    pip install -r requirements.txt
+    ```
+5. Generate the initial audio file for testing:
+    ```
+    tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav
+    ```
+6. Download Tesseract OCR for Windows: https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.1.20230401.exe
+7. Get your API key for ChatGPT: https://platform.openai.com/account/api-keys
+8. Edit the \`start.py\` file with your API key on line 42.
 
 ## Usage
+To run the script, enter the following command in your terminal:
+```
+python start.py
+```
+
 The program listens for voice commands and responds accordingly. Some example commands are:
 
 ### Voice Commands

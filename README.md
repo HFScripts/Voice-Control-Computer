@@ -8,13 +8,12 @@ So for this project, you must use Anaconda/Conda for windows. The reason for thi
 - `conda activate my_tts_env`
 
 ## Getting started
-1. Install the required Python packages: `pip install speechrecognition pyautogui pytesseract pillow screeninfo textdistance pyttsx3 fuzzywuzzy python-Levenshtein pywin32`
+1. Install the required Python packages: `pip install speechrecognition pyautogui pytesseract pillow screeninfo textdistance pyttsx3 fuzzywuzzy python-Levenshtein pywin32 openai tts`
 2. If you're using Windows, also run `conda install pywin32`
 3. Download and install the Tesseract OCR executable from [here](https://github.com/UB-Mannheim/tesseract/wiki) and set the Tesseract OCR executable path in the script.
 4. Set up an OpenAI API key [here](https://beta.openai.com/signup/) and set the `api_key` variable in the script.
-5. pip install tts
-6. `tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav`
-7. Run the script!
+5. `tts --text "Fetching that for you now" --model_name tts_models/en/ljspeech/vits--neon --out_path fetching.wav`
+6. Run the script!
 
 ## Usage
 The program listens for voice commands and responds accordingly. Some example commands are:

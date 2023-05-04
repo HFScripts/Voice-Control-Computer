@@ -4,6 +4,7 @@ import os
 import re
 import subprocess
 import time
+from screeninfo import get_monitors
 
 from concurrent.futures import ThreadPoolExecutor
 from fuzzywuzzy import fuzz

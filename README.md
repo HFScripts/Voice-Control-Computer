@@ -7,9 +7,6 @@ So for this project, you must use Anaconda/Conda for windows. The reason for thi
 - `conda create --name my_tts_env`
 - `conda activate my_tts_env`
 
-## Getting started
-# Voice-Control-Computer
-
 ## Installation
 
 1. Download and install Anaconda: https://www.anaconda.com/
